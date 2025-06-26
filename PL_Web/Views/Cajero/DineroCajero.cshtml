@@ -1,0 +1,43 @@
+﻿@model ML.Cajero
+@{
+    ViewBag.Title = "DineroCajero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DineroCajero</h2>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<a href="@Url.Action()" class="btn btn-primary mb-3">Agregar Dinero</a>
+
+@if (Model.Cajeros.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-dark table-striped" id="tablaProductos">
+            <thead>
+                <tr>
+                    <th scoope="col">Tipo</th>
+                    <th scoope="col">Cantidad</th>
+                    <th scoope="col">Denominación</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(ML.Cajero cajero in Model.Cajeros)
+                {
+                    <tr>
+                        <td>@cajero.Tipo.Nombre</td>
+                        <td>@cajero.Cantidad</td>
+                        <td>$@cajero.Denominacion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        No hay registros en la Base de Datos.
+    </div>
+}
+

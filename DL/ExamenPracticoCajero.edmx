@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ExamenPracticoCajeroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="IdCajero" />
+          </Key>
+          <Property Name="IdCajero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipo" Type="int" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Denominacion" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo">
+          <Key>
+            <PropertyRef Name="IdTipo" />
+          </Key>
+          <Property Name="IdTipo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Cajero__IdTipo__15502E78">
+          <End Role="Tipo" Type="Self.Tipo" Multiplicity="0..1" />
+          <End Role="Cajero" Type="Self.Cajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo">
+              <PropertyRef Name="IdTipo" />
+            </Principal>
+            <Dependent Role="Cajero">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CajeroGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RetirarEfectivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Retiro" Type="decimal" Mode="In" />
+        </Function>
+        <EntityContainer Name="ExamenPracticoCajeroModelStoreContainer">
+          <EntitySet Name="Cajero" EntityType="Self.Cajero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo" EntityType="Self.Tipo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cajero__IdTipo__15502E78" Association="Self.FK__Cajero__IdTipo__15502E78">
+            <End Role="Tipo" EntitySet="Tipo" />
+            <End Role="Cajero" EntitySet="Cajero" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExamenPracticoCajeroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="IdCajero" />
+          </Key>
+          <Property Name="IdCajero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipo" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Denominacion" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Tipo" Relationship="Self.FK__Cajero__IdTipo__15502E78" FromRole="Cajero" ToRole="Tipo" />
+        </EntityType>
+        <EntityType Name="Tipo">
+          <Key>
+            <PropertyRef Name="IdTipo" />
+          </Key>
+          <Property Name="IdTipo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cajeroes" Relationship="Self.FK__Cajero__IdTipo__15502E78" FromRole="Tipo" ToRole="Cajero" />
+        </EntityType>
+        <Association Name="FK__Cajero__IdTipo__15502E78">
+          <End Role="Tipo" Type="Self.Tipo" Multiplicity="0..1" />
+          <End Role="Cajero" Type="Self.Cajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo">
+              <PropertyRef Name="IdTipo" />
+            </Principal>
+            <Dependent Role="Cajero">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExamenPracticoCajeroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cajeroes" EntityType="Self.Cajero" />
+          <EntitySet Name="Tipoes" EntityType="Self.Tipo" />
+          <AssociationSet Name="FK__Cajero__IdTipo__15502E78" Association="Self.FK__Cajero__IdTipo__15502E78">
+            <End Role="Tipo" EntitySet="Tipoes" />
+            <End Role="Cajero" EntitySet="Cajeroes" />
+          </AssociationSet>
+          <FunctionImport Name="RetirarEfectivo">
+          <Parameter Name="Retiro" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="CajeroGetAll" ReturnType="Collection(ExamenPracticoCajeroModel.CajeroGetAll_Result)" />
+        </EntityContainer>
+        <ComplexType Name="CajeroGetAll_Result">
+          <Property Type="Int32" Name="IdCajero" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="7" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="Denominacion" Nullable="false" Precision="6" Scale="2" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExamenPracticoCajeroModelStoreContainer" CdmEntityContainer="ExamenPracticoCajeroEntities">
+          <EntitySetMapping Name="Cajeroes">
+            <EntityTypeMapping TypeName="ExamenPracticoCajeroModel.Cajero">
+              <MappingFragment StoreEntitySet="Cajero">
+                <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+                <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Denominacion" ColumnName="Denominacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipoes">
+            <EntityTypeMapping TypeName="ExamenPracticoCajeroModel.Tipo">
+              <MappingFragment StoreEntitySet="Tipo">
+                <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RetirarEfectivo" FunctionName="ExamenPracticoCajeroModel.Store.RetirarEfectivo" />
+          <FunctionImportMapping FunctionImportName="CajeroGetAll" FunctionName="ExamenPracticoCajeroModel.Store.CajeroGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenPracticoCajeroModel.CajeroGetAll_Result">
+                <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Denominacion" ColumnName="Denominacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

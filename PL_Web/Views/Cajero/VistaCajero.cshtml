@@ -1,0 +1,42 @@
+﻿@model ML.Cajero
+@{
+    ViewBag.Title = "VistaCajero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>VistaCajero</h2>
+
+@using (Html.BeginForm("Retirar", "Cajero", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.IdCajero)
+
+    <div class="card p-3 bg-light shadow-sm">
+        <div class="row">
+            <div class="col">
+                @Html.LabelFor(model => model.Retiro, new { @class = "form-label text-dark fw-bold" })
+                @Html.TextBoxFor(model => model.Retiro, new
+                {
+                    @class = "form-control rounded-pill",
+                    @id = "inptNombre"
+                })
+                @Html.ValidationMessageFor(model => model.Retiro, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <p></p>
+                <button type="submit" class="btn btn-primary mb-2" name="btnAgregarRegistro" id="btnAgregarRegistro">Retirar Efectivo</button>
+            </div>
+
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
